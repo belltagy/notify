@@ -11,6 +11,8 @@ django-allauth = "*"
 django-extensions = "*"
 dj-rest-auth = "*"
 django-environ = "*"
+drf-yasg2 = "*"
+drf-yasg = "*"
 
 [dev-packages]
 
