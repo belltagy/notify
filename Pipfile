@@ -9,6 +9,7 @@ djangorestframework = "*"
 django-fcm = "*"
 django-allauth = "*"
 django-extensions = "*"
+dj-rest-auth = "*"
 
 [dev-packages]
 
