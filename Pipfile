@@ -10,6 +10,7 @@ django-fcm = "*"
 django-allauth = "*"
 django-extensions = "*"
 dj-rest-auth = "*"
+django-environ = "*"
 
 [dev-packages]
 
