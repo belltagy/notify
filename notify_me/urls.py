@@ -22,10 +22,13 @@ router = DefaultRouter()
 router.register(r'devices', FCMDeviceViewSet)
 
 urlpatterns = [
-    path("home", include("home.urls")),
+    path("", include("home.urls",namespace="home")),
+    path('topics/', include("topics.urls",namespace="topics"),name="topics"),
+
     path("accounts/", include("allauth.urls")),
     path('admin/', admin.site.urls),
     path('docs/', include_docs_urls(title='FCM django web demo')),
-    path('', include(router.urls)),
+    path('fcm/', include(router.urls)),
+
 ]
 

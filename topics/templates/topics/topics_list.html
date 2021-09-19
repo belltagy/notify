@@ -1,0 +1,25 @@
+{% extends 'home/base.html' %}
+{% block content %}
+
+<div class="container container-fluid">
+<div class="my-4">
+    <button class="btn btn-primary float-left"><i class="fas fa-folder-plus">Create Topic</i></button>
+</div>
+<table class="table table-striped">
+<tr>
+    <th>Topic Name </th>
+    <th> # of subscriptions</th>
+    <th> Subscribe</th>
+</tr>
+{% for topic in object_list %}
+<tr>
+    <td>{{topic.name}}</td>
+    <td>{{topic.users.count}}</td>
+    <td><button class="btn btn-primary">Subscribe</button></td>
+</tr>
+{% empty %}
+<tr class="text-center" colspan="3"> No topics</tr>
+{% endfor %}
+</table>
+</div>
+{% endblock %}
