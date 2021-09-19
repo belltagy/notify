@@ -13,6 +13,9 @@ dj-rest-auth = "*"
 django-environ = "*"
 drf-yasg2 = "*"
 drf-yasg = "*"
+fcm-django = "*"
+firebase-admin = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

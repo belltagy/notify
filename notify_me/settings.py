@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+from posixpath import basename
 import environ
 import logging
 from datetime import timedelta
-from firebase_admin import initialize_app #firbase
+
 from pathlib import Path
 
 env = environ.Env()
@@ -63,7 +64,10 @@ INSTALLED_APPS = [
     ## local apps ###
     'users',
     'home',
+    'topics',
 ]
+
+
 ######### authentications #############33
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -103,7 +107,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
         #'rest_framework.authentication.BasicAuthentication',
-        #'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
 
     'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES,
@@ -215,13 +219,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 ################# firebase setup options for fcm_django ###############
+import firebase_admin
+from firebase_admin import credentials
 # Optional ONLY IF you have initialized a firebase app already:
 # Visit https://firebase.google.com/docs/admin/setup/#python
 # for more options for the following:
 # Store an environment variable called GOOGLE_APPLICATION_CREDENTIALS
 # which is a path that point to a json file with your credentials.
 # Additional arguments are available: credentials, options, name
-FIREBASE_APP = initialize_app()
 # To learn more, visit the docs here:
 # https://cloud.google.com/docs/authentication/getting-started>
 
@@ -236,7 +241,24 @@ FCM_DJANGO_SETTINGS = {
      # default: False
     #"DELETE_INACTIVE_DEVICES": True/False,
 }
+FCM_DJANGO_SETTINGS = {
+        "FCM_SERVER_KEY": env.str("FCM_SERVER_KEY")
+}
 
+# plug in local settings if any
+PROJECT_APP = os.path.basename(BASE_DIR)
+# f = os.path.join(PROJECT_APP, 'local_settings.py')
+# if os.path.exists(f):
+#     import sys
+#     import imp
+#     module_name = '%s.local_settings' % PROJECT_APP
+#     module = imp.new_module(module_name)
+#     module.__file__ = f
+#     sys.modules[module_name] = module
+#     exec(open(f, 'rb').read())
+
+cred = credentials.Certificate(os.path.join(BASE_DIR , "fcm_cred.json"))
+firebase_admin.initialize_app(cred)
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 

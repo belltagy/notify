@@ -15,9 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
+from fcm_django.api.rest_framework import FCMDeviceViewSet, FCMDeviceAuthorizedViewSet
+from rest_framework.routers import DefaultRouter
+from rest_framework.documentation import include_docs_urls
+router = DefaultRouter()
+router.register(r'devices', FCMDeviceViewSet)
 
 urlpatterns = [
-    path("", include("home.urls")),
+    path("home", include("home.urls")),
     path("accounts/", include("allauth.urls")),
     path('admin/', admin.site.urls),
+    path('docs/', include_docs_urls(title='FCM django web demo')),
+    path('', include(router.urls)),
 ]
+
